@@ -3,11 +3,18 @@ module.exports = {
   mode: 'jit',
   darkMode: false, // or 'media' or 'class'
   theme: {
-    fontFamily: {
-      display: ['Open Sans', 'sans-serif'],
-      body: ['Open Sans', 'sans-serif'],
-    },
+
     extend: {
+      fontFamily: {
+        spaceGrotesk: ['SpaceGrotesk', 'sans-serif'],
+        archivo: ['Archivo', 'sans-serif'],
+      },
+      fontWeight: {
+        regular: 400,
+        medium: 500,
+        semiBold: 600,
+        bold: 700,
+      },
       screens: {
         mf: '990px',
       },

@@ -1,21 +1,28 @@
-require('dotenv').config()
-const sharp = require('sharp')
-const { faker } = require('@faker-js/faker')
-const ipfsClient = require('ipfs-http-client')
+// api/index.js или ваш основной файл
+require('dotenv').config();
+const sharp = require('sharp');
+const { faker } = require('@faker-js/faker');
+let ipfsClient;
 
-const auth =
-  'Basic ' +
-  Buffer.from(process.env.INFURIA_PID + ':' + process.env.INFURIA_API).toString(
-    'base64',
-  )
-const client = ipfsClient.create({
-  host: 'ipfs.infura.io',
-  port: 5001,
-  protocol: 'https',
-  headers: {
-    authorization: auth,
-  },
-})
+if (process.env.INFURIA_PID && process.env.INFURIA_API) {
+  const auth =
+    'Basic ' +
+    Buffer.from(process.env.INFURIA_PID + ':' + process.env.INFURIA_API).toString(
+      'base64',
+    );
+  ipfsClient = require('ipfs-http-client').create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+      authorization: auth,
+    },
+  });
+} else {
+  console.log('Using mock IPFS client');
+  ipfsClient = require('./ipfsMock');
+}
+
 const attributes = {
   weapon: [
     'Stick',
@@ -38,7 +45,8 @@ const attributes = {
     'Rainforests',
   ],
   rarity: Array.from(Array(6).keys()),
-}
+};
+
 const toMetadata = ({ id, name, description, price, image }) => ({
   id,
   name,
@@ -70,13 +78,15 @@ const toMetadata = ({ id, name, description, price, image }) => ({
       value: 1,
     },
   ],
-})
-const toWebp = async (image) => await sharp(image).resize(500).webp().toBuffer()
-const uploadToIPFS = async (data) => {
-  const created = await client.add(data)
-  return `https://ipfs.io/ipfs/${created.path}`
-}
+});
 
-exports.toWebp = toWebp
-exports.toMetadata = toMetadata
-exports.uploadToIPFS = uploadToIPFS
+const toWebp = async (image) => await sharp(image).resize(500).webp().toBuffer();
+
+const uploadToIPFS = async (data) => {
+  const created = await ipfsClient.add(data);
+  return `https://ipfs.io/ipfs/${created.path}`;
+};
+
+exports.toWebp = toWebp;
+exports.toMetadata = toMetadata;
+exports.uploadToIPFS = uploadToIPFS;

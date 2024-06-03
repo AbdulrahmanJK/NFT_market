@@ -1,7 +1,6 @@
 import Nft from './views/Nft'
 import Home from './views/Home'
 import Header from './components/Header'
-import Footer from './components/Footer'
 import { useEffect, useState } from 'react'
 import PlaceBid from './components/PlaceBid'
 import Collections from './views/Collections'
@@ -28,8 +27,7 @@ function App() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-t from-gray-800 bg-repeat
-    via-[#25bd9c] to-gray-900 bg-center subpixel-antialiased"
+      className="h-screen bg-[#0e0e0e]  to-gray-900 bg-center subpixel-antialiased "
     >
       <Header />
       {loaded ? (
@@ -47,7 +45,6 @@ function App() {
           <ChangePrice />
         </>
       ) : null}
-      <Footer />
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

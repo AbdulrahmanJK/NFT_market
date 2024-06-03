@@ -1,122 +1,116 @@
-import { toast } from 'react-toastify'
-import { BsArrowRightShort } from 'react-icons/bs'
-import picture0 from '../assets/images/picture0.png'
-import { setGlobalState, useGlobalState } from '../store'
-import { loginWithCometChat, signUpWithCometChat } from '../services/chat'
+import { toast } from 'react-toastify';
+import { BsArrowRightShort } from 'react-icons/bs';
+import PlaceHolderLogo from '../assets/images/placeholder.svg';
+import BackGroundSphere from '../assets/images/Sphere.svg';
+
+import { setGlobalState, useGlobalState } from '../store';
+import { loginWithCometChat, signUpWithCometChat } from '../services/chat';
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-start md:flex-row w-4/5 mx-auto mt-11">
+    <div className='flex flex-col items-start md:flex-row w-4/5 mx-auto mt-11'>
       <Banner />
       <Bidder />
     </div>
-  )
-}
+  );
+};
 
 const Bidder = () => (
   <div
-    className="w-full text-white overflow-hidden bg-gray-800 rounded-md shadow-xl 
-    shadow-black md:w-3/5 lg:w-2/5 md:mt-0 font-sans"
+    className=' bg-white 
+      rounded-xl py-3 px-3 w-[367px] '
   >
-    <img src={picture0} alt="nft" className="object-cover w-full h-60" />
+    <img src={PlaceHolderLogo} alt='nft' className=' w-[343px]  ' />
     <div
-      className="shadow-lg shadow-gray-400 border-4 border-[#ffffff36] 
-      flex flex-row justify-between items-center px-3"
+      className='
+      flex flex-row justify-between items-center'
     >
-      <div className="p-2">
+      <div className='text-base font-normal  font-archivo text-gray-900 opacity-50 text-black'>
         Current Bid
-        <div className="font-bold text-center">2.231 ETH</div>
+        <div className='font-bold text-center text-black'>2.231 ETH</div>
       </div>
-      <div className="p-2">
+      <div className='text-base font-normal font-archivo text-gray-900 opacity-50 text-black'>
         Auction End
-        <div className="font-bold text-center">20:10</div>
+        <div className='font-bold text-center text-black'>20:10</div>
       </div>
-    </div>
-    <div
-      className="bg-green-500 w-full h-[40px] p-2 text-center 
-    font-bold font-mono "
-    >
-      Place a Bid
     </div>
   </div>
-)
+);
 
 const Banner = () => {
-  const [currentUser] = useGlobalState('currentUser')
+  const [currentUser] = useGlobalState('currentUser');
 
   const handleLogin = async () => {
     await toast.promise(
       new Promise(async (resolve, reject) => {
         await loginWithCometChat()
           .then((user) => {
-            setGlobalState('currentUser', user)
-            console.log(user)
-            resolve()
+            setGlobalState('currentUser', user);
+            console.log(user);
+            resolve();
           })
           .catch((err) => {
-            console.log(err)
-            reject()
-          })
+            console.log(err);
+            reject();
+          });
       }),
       {
         pending: 'Signing in...',
         success: 'Logged in successful 👌',
         error: 'Error, are you signed up? 🤯',
-      },
-    )
-  }
+      }
+    );
+  };
 
   const handleSignup = async () => {
     await toast.promise(
       new Promise(async (resolve, reject) => {
         await signUpWithCometChat()
           .then((user) => {
-            console.log(user)
-            resolve(user)
+            console.log(user);
+            resolve(user);
           })
           .catch((err) => {
-            console.log(err)
-            reject(err)
-          })
+            console.log(err);
+            reject(err);
+          });
       }),
       {
         pending: 'Signing up...',
         success: 'Signned up successful 👌',
         error: 'Error, maybe you should login instead? 🤯',
-      },
-    )
-  }
+      }
+    );
+  };
 
   return (
     <div
-      className="flex flex-col md:flex-row w-full justify-between 
-        items-center mx-auto"
+      className='flex flex-col md:flex-row w-full justify-between 
+        items-center mx-auto '
     >
-      <div className="">
-        <h1 className="text-white font-semibold text-5xl py-1">
+      <div className=''>
+        <h1 className=' uppercase text-white font-semibold text-5xl py-1 font-spaceGrotesk font-bold'>
           Discover, Collect
         </h1>
-        <h1 className="font-semibold text-4xl mb-5 text-white py-1">
+        <h1 className=' uppercase font-semibold text-4xl mb-5 text-white py-1 font-spaceGrotesk font-bold'>
           and Sell
-          <span className="text-green-500 px-1">NFTs</span>.
+          <span className=' uppercase text-[#FE7762] px-1 font-spaceGrotesk font-bold'> NFTS</span>
         </h1>
-        <p className="text-white  font-light">
-          More than 100+ NFT available for collect
-        </p>
-        <p className="text-white mb-11 font-light">& sell, get your NFT now.</p>
-        <div className="flex flew-row text-5xl mb-4">
+        <p className='text-white font-archivo font-light'>More than 100+ NFT available for</p>
+        <p className='text-white mb-11 font-archivo font-light '>collect & sell, get your NFT now.</p>
+        <div className='flex flew-row text-5xl mb-4'>
           {!currentUser ? (
-            <div className="flex justify-start items-center space-x-2">
+            <div className='flex justify-between items-center space-x-2 rounded-2xl py-1.5 px-1.5 w-[330px] h-[66px] bg-[#191A1E]'>
               <button
-                className="text-white text-sm p-2 bg-green-500 rounded-sm w-auto 
-                flex flex-row justify-center items-center shadow-md shadow-gray-700"
+                className='text-white text-lg p-2 bg-[#FE7762] rounded-[18px] px-10.5 py-4.5 w-36 h-14 
+                flex flex-row justify-center items-center'
                 onClick={handleLogin}
               >
                 Login Now
               </button>
               <button
-                className="text-white text-sm p-2 flex flex-row shadow-md shadow-gray-700
-                justify-center items-center bg-[#ffffff36] rounded-sm w-auto"
+                className='text-white text-lg p-2 flex flex-row 
+                justify-center items-center rounded-[18px] px-10.5 py-4.5 w-36 h-14'
                 onClick={handleSignup}
               >
                 Signup Now
@@ -124,32 +118,35 @@ const Banner = () => {
             </div>
           ) : (
             <button
-              className="text-white text-sm p-2 bg-green-500 rounded-sm w-auto 
-              flex flex-row justify-center items-center shadow-md shadow-gray-700"
+              className='text-white text-lg p-2 bg-green-500 rounded-[18px] px-10.5 py-4.5 w-36 h-14 
+              flex flex-row justify-center items-center '
               onClick={() => setGlobalState('boxModal', 'scale-100')}
             >
               Create NFT
-              <BsArrowRightShort className="font-bold animate-pulse" />
+              <BsArrowRightShort className='font-bold animate-pulse' />
             </button>
           )}
         </div>
-        <div className="flex items-center justify-between w-3/4 mt-5">
+        <div className='flex items-center justify-between w-[456px] h-[70px] '>
           <div>
-            <p className="text-white font-bold">100k+</p>
-            <small className="text-gray-300">Auction</small>
+            <p className='text-white font-bold uppercase font-archivo text-4xl font-bold '>100k+</p>
+            <small className='text-gray-300 uppercase'>Auction</small>
           </div>
           <div>
-            <p className="text-white font-bold">210k+</p>
-            <small className="text-gray-300">Rare</small>
+            <p className='text-white font-bold uppercase font-archivo text-4xl font-bold'>210k+</p>
+            <small className='text-gray-300 uppercase'>Rare</small>
           </div>
           <div>
-            <p className="text-white font-bold">120k+</p>
-            <small className="text-gray-300">Artist</small>
+            <p className='text-white font-bold uppercase font-archivo text-4xl font-bold'>120k+</p>
+            <small className='text-gray-300 uppercase'>Artist</small>
           </div>
         </div>
       </div>
+      <div className='absolute right-0 top-0 w-auto h-auto'>
+        <img src={BackGroundSphere} alt='nft' className='w-[899px]  ' />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
