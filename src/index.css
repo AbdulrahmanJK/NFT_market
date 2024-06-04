@@ -43,9 +43,17 @@
   font-style: normal;
 }
 
-
+:root{
+  height: 100vh;
+  
+}
 body {
-  font-family: 'MyFont', sans-serif;
+  background-color: #0e0e0e;
+  background-image: url('./assets/images/Sphere.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  font-family: 'MyFont'
+
 }
 
 * html {

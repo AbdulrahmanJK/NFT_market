@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div
-      className="h-screen bg-[#0e0e0e]  to-gray-900 bg-center subpixel-antialiased "
+      className="h-screen to-gray-900 bg-center subpixel-antialiased "
     >
       <Header />
       {loaded ? (

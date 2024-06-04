@@ -8,7 +8,7 @@ const Header = () => {
   const [connectedAccount] = useGlobalState('connectedAccount');
 
   return (
-    <nav className='w-4/5 flex flex-row md:justify-center justify-between items-center py-4 mx-auto'>
+    <nav className='w-4/5 mb-[90px] flex flex-row md:justify-center justify-between items-center py-4 mx-auto'>
       <div className='md:flex-[0.5] flex-initial justify-center items-center'>
         <Link to='/' className='text-white'>
           <img src={Logo} alt='Logo' />
@@ -30,7 +30,7 @@ const Header = () => {
           </button>
         ) : (
           <button
-            className=' text-black  bg-white rounded-[18px] px-10 py-3 text-base cursor-pointer  font-medium text-center text-xs sm:text-base font-archivo'
+            className=' w-[190px] text-black  bg-white rounded-[18px] px-10 py-3 text-base cursor-pointer  font-medium text-center text-xs sm:text-base font-archivo'
             onClick={connectWallet}
           >
             Connect Wallet

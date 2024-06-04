@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 initCometChat().then(() => {
   ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter >
       <App />
     </BrowserRouter>,
     document.getElementById('root'),
