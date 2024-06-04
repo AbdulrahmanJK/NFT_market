@@ -88,12 +88,12 @@ const Banner = () => {
         items-center mx-auto '
     >
       <div className=''>
-        <h1 className=' uppercase text-white font-semibold text-[60px] py-1 font-spaceGrotesk '>
+        <h1 className=' uppercase leading-none text-white font-semibold text-[60px] font-spaceGrotesk '>
           Discover, Collect
         </h1>
-        <h1 className=' uppercase font-semibold text-4xl mb-[30px] text-[60px] text-white py-1 font-spaceGrotesk '>
+        <h1 className=' uppercase  leading-none font-semibold mb-[30px] text-[60px] text-white font-spaceGrotesk '>
           and Sell
-          <span className=' uppercase text-[#FE7762] px-1 font-spaceGrotesk '> NFTS</span>
+          <span className='text-[60px] uppercase text-[#FE7762] px-1 font-spaceGrotesk '> NFTS</span>
         </h1>
         <p className='text-white font-archivo text-[20px] font-light'>More than 100+ NFT available for</p>
         <p className='text-white mb-[30px] font-archivo text-[20px] font-light '>collect & sell, get your NFT now.</p>
