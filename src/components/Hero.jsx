@@ -44,19 +44,23 @@ const Banner = () => {
       new Promise(async (resolve, reject) => {
         await loginWithCometChat()
           .then((user) => {
-            setGlobalState('currentUser', user);
-            console.log(user);
-            resolve();
+            if (user) {
+              setGlobalState('currentUser', user);
+              console.log(user);
+              resolve();
+            } else {
+              reject(new Error('Login failed: User is undefined'));
+            }
           })
           .catch((err) => {
             console.log(err);
-            reject();
+            reject(err);
           });
       }),
       {
         pending: 'Signing in...',
-        success: 'Logged in successful 👌',
-        error: 'Error, are you signed up? 🤯',
+        success: 'Logged in successfully 👌',
+        error: 'Error, are you signed up wallet? 🤯',
       }
     );
   };
@@ -66,8 +70,12 @@ const Banner = () => {
       new Promise(async (resolve, reject) => {
         await signUpWithCometChat()
           .then((user) => {
-            console.log(user);
-            resolve(user);
+            if (user) {
+              console.log(user);
+              resolve(user);
+            } else {
+              reject(new Error('Signup failed: User is undefined'));
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -76,12 +84,12 @@ const Banner = () => {
       }),
       {
         pending: 'Signing up...',
-        success: 'Signned up successful 👌',
+        success: 'Signed up successfully 👌',
         error: 'Error, maybe you should login instead? 🤯',
       }
     );
   };
-
+  
   return (
     <div
       className='flex flex-col md:flex-row w-full justify-between 

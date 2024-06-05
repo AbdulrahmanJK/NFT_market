@@ -62,6 +62,8 @@ const connectWallet = async () => {
     if (!ethereum) return alert('Please install Metamask')
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
     setGlobalState('connectedAccount', accounts[0]?.toLowerCase())
+    console.log(window.ethereum);
+    
   } catch (error) {
     reportError(error)
   }
