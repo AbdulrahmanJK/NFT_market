@@ -2,11 +2,10 @@ require('@nomiclabs/hardhat-waffle')
 require('dotenv').config()
 //https://brown-characteristic-platypus-927.mypinata.cloud
 module.exports = {
-  defaultNetwork: 'localhost',
   networks: {
-    Ocean: {
-      url: 'https://rpc1.ocean.bahamut.io',
-      accounts: process.env.PRIVATE_KEY,
+    Fantom: {
+      url: 'https://rpc.testnet.fantom.network',
+      accounts: [process.env.PRIVATE_KEY],
     },
   },
   solidity: {
@@ -26,3 +25,4 @@ module.exports = {
     timeout: 40000,
   },
 }
+// require('./scripts/deploy')

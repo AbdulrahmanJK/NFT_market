@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connectWallet } from '../services/blockchain';
 import { truncate, useGlobalState } from '../store';
 import Logo from '../assets/images/LOGO.png';
+import { logOutWithCometChat } from '../services/chat';
 
 const Header = () => {
   const [connectedAccount] = useGlobalState('connectedAccount');
@@ -25,7 +26,10 @@ const Header = () => {
         <Link className='mx-4 cursor-pointer font-archivo font-regular'>Artists</Link>
         <Link className='mx-4 cursor-pointer font-archivo font-regular'>Community</Link>
         {connectedAccount ? (
-          <button className=' text-black  bg-white rounded-[18px] px-10 py-3 text-base cursor-pointer font-medium text-center text-xs sm:text-base font-archivo'>
+          <button
+            onClick={logOutWithCometChat}
+            className=' text-black  bg-white rounded-[18px] px-10 py-3 text-base cursor-pointer font-medium text-center text-xs sm:text-base font-archivo'
+          >
             {truncate(connectedAccount, 4, 4, 11)}
           </button>
         ) : (
@@ -37,7 +41,6 @@ const Header = () => {
           </button>
         )}
       </ul>
-      
     </nav>
   );
 };

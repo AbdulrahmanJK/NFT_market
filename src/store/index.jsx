@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { createGlobalState } from 'react-hooks-global-state'
 
 const { getGlobalState, useGlobalState, setGlobalState } = createGlobalState({
@@ -10,8 +11,9 @@ const { getGlobalState, useGlobalState, setGlobalState } = createGlobalState({
   bidders: [],
   auctions: [],
   auction: null,
-  currentUser: null,
+  currentUser: false,
   group: null,
+  contract: null, 
 })
 
 const truncate = (text, startChars, endChars, maxLength) => {

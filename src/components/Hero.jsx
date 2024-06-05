@@ -1,9 +1,13 @@
 import { toast } from 'react-toastify';
 import { BsArrowRightShort } from 'react-icons/bs';
 import PlaceHolderLogo from '../assets/images/placeholder.svg';
-
-import { setGlobalState, useGlobalState } from '../store';
+import { CONSTANTS } from '../services/chat';
+import { getGlobalState, setGlobalState, useGlobalState } from '../store';
 import { loginWithCometChat, signUpWithCometChat } from '../services/chat';
+import { isWallectConnected } from '../services/blockchain';
+import { CometChat } from '@cometchat-pro/chat';
+
+
 
 const Hero = () => {
   return (
@@ -35,61 +39,88 @@ const Bidder = () => (
     </div>
   </div>
 );
-
 const Banner = () => {
   const [currentUser] = useGlobalState('currentUser');
+  isWallectConnected;
 
   const handleLogin = async () => {
-    await toast.promise(
-      new Promise(async (resolve, reject) => {
-        await loginWithCometChat()
-          .then((user) => {
-            if (user) {
-              setGlobalState('currentUser', user);
-              console.log(user);
-              resolve();
-            } else {
-              reject(new Error('Login failed: User is undefined'));
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          });
-      }),
-      {
-        pending: 'Signing in...',
-        success: 'Logged in successfully 👌',
-        error: 'Error, are you signed up wallet? 🤯',
-      }
-    );
+    if (await isWallectConnected()) {
+      await toast.promise(
+        new Promise(async (resolve, reject) => {
+          await loginWithCometChat()
+            .then((user) => {
+              if (user) {
+                setGlobalState('currentUser', user);
+                console.log(user);
+                resolve();
+              } else {
+                reject(new Error('Login failed: User is undefined'));
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              reject(err);
+            });
+        }),
+        {
+          pending: 'Signing in...',
+          success: 'Logged in successfully 👌',
+          error: 'Error, are you signed up wallet? 🤯',
+        }
+      );
+    } else {
+      toast.error('Auth wallet');
+    }
+  };
+
+  const loginWithCometChat = async () => {
+    const authKey = CONSTANTS.Auth_Key;
+    const UID = getGlobalState('connectedAccount');
+
+    return new Promise(async (resolve, reject) => {
+      await CometChat.login(UID, authKey)
+        .then((user) => resolve(user))
+        .catch((error) => {
+          showErrorToast('loginWithCometChat', error);
+          reject(error);
+        });
+    });
+  };
+
+  const showErrorToast = (identifier, error) => {
+    const errorMessage = error.message || JSON.stringify(error);
+    toast.error(`Error in ${identifier}: ${errorMessage}`);
   };
 
   const handleSignup = async () => {
-    await toast.promise(
-      new Promise(async (resolve, reject) => {
-        await signUpWithCometChat()
-          .then((user) => {
-            if (user) {
-              console.log(user);
-              resolve(user);
-            } else {
-              reject(new Error('Signup failed: User is undefined'));
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          });
-      }),
-      {
-        pending: 'Signing up...',
-        success: 'Signed up successfully 👌',
-        error: 'Error, maybe you should login instead? 🤯',
-      }
-    );
+    if (await isWallectConnected()) {
+      await toast.promise(
+        new Promise(async (resolve, reject) => {
+          await signUpWithCometChat()
+            .then((user) => {
+              if (user) {
+                console.log(user);
+                resolve(user);
+              } else {
+                reject(new Error('Signup failed: User is undefined'));
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              reject(err);
+            });
+        }),
+        {
+          pending: 'Signing up...',
+          success: 'Signed up successfully 👌',
+          error: 'Error, maybe you should login instead? 🤯',
+        }
+      );
+    } else {
+      toast.error('Auth wallet');
+    }
   };
-  
+
   return (
     <div
       className='flex flex-col md:flex-row w-full justify-between 
@@ -149,7 +180,6 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };

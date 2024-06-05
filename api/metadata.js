@@ -1,27 +1,11 @@
-// api/index.js или ваш основной файл
 require('dotenv').config();
 const sharp = require('sharp');
 const { faker } = require('@faker-js/faker');
-let ipfsClient;
+const axios = require('axios');
+const FormData = require('form-data');
 
-if (process.env.INFURIA_PID && process.env.INFURIA_API) {
-  const auth =
-    'Basic ' +
-    Buffer.from(process.env.INFURIA_PID + ':' + process.env.INFURIA_API).toString(
-      'base64',
-    );
-  ipfsClient = require('ipfs-http-client').create({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-    headers: {
-      authorization: auth,
-    },
-  });
-} else {
-  console.log('Using mock IPFS client');
-  ipfsClient = require('./ipfsMock');
-}
+const PINATA_API_KEY = process.env.PINATA_API_KEY;
+const PINATA_SECRET_API_KEY = process.env.PINATA_SECRET_API_KEY;
 
 const attributes = {
   weapon: [
@@ -83,8 +67,20 @@ const toMetadata = ({ id, name, description, price, image }) => ({
 const toWebp = async (image) => await sharp(image).resize(500).webp().toBuffer();
 
 const uploadToIPFS = async (data) => {
-  const created = await ipfsClient.add(data);
-  return `https://ipfs.io/ipfs/${created.path}`;
+  const formData = new FormData();
+  formData.append('file', data, 'image.webp');
+
+  const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+    maxContentLength: 'Infinity',
+    maxBodyLength: 'Infinity',
+    headers: {
+      'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+      pinata_api_key: PINATA_API_KEY,
+      pinata_secret_api_key: PINATA_SECRET_API_KEY,
+    },
+  });
+
+  return `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
 };
 
 exports.toWebp = toWebp;
