@@ -1,16 +1,4 @@
-# How to Build an NFT Auction Site with React, Solidity, and CometChat
 
-Read the full tutorial here: [**>> How to Build an NFT Auction Site with React, Solidity, and CometChat**](https://daltonic.github.io)
-
-This example shows How to Build an NFT Auction Site with React, Solidity, and CometChat:
-
-![Offering Item](./screenshots/0.gif)
-
-<center><figcaption>NFT Auction Marketplace: Offerings</figcaption></center>
-
-![Bidding Item](./screenshots/1.gif)
-
-<center><figcaption>NFT Auction Marketplace: Biddings</figcaption></center>
 
 ## Technology
 
@@ -18,7 +6,7 @@ This demo uses:
 
 - Metamask
 - Hardhat
-- Infuria
+- Pinato
 - ReactJs
 - Tailwind CSS
 - Solidity
@@ -38,7 +26,7 @@ To run the demo follow these steps:
    cd dappAution # Navigate to the new folder.
    yarn install # Installs all the dependencies.
    ```
-2. Head to [infuria](https://app.infura.io/dashboard) and create an IPFS project.
+2. Head to [Pinato] and create an IPFS project.
 
 3. Create another `.env` file in the api directory and enter the following details.
    ```sh
@@ -59,18 +47,4 @@ To run the demo follow these steps:
 5. On a second terminal, run `yarn start` to spin up the app on the browser.
    <br/>
 
-If your confuse about the installation, check out this **TUTORIAL** to see how you should run it.
 
-Questions about running the demo? [Open an issue](https://github.com/Daltonic/dappAution/issues). We're here to help ✌️
-
-## Useful links
-
-- 🏠 [Website](https://daltonic.github.io/)
-- ⚽ [Metamask](https://metamask.io/)
-- 🚀 [Remix Editor](https://remix.ethereum.org/)
-- 💡 [Hardhat](https://hardhat.org/)
-- ✨ [Infuria](https://infura.io/)
-- 🔥 [ReactJs](https://reactjs.org/)
-- 🐻 [Solidity](https://soliditylang.org/)
-- 👀 [Ethersjs](https://docs.ethers.io/v5/)
-- 🎅 [CometChat](https://try.cometchat.com/daltonic)
